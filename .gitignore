@@ -1,3 +1,5 @@
 # Dataset sources and generated media are published separately.
 /data/
 
+# Keep the full data-construction README as a local-only backup.
+/README_with_data_construction.md
