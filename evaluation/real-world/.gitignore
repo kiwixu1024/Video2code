@@ -1,0 +1,21 @@
+# Secrets / local config
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Pipeline outputs
+results/
+
+# Dataset inputs and extracted media are published separately.
+data/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

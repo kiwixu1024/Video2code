@@ -1,0 +1,28 @@
+# Secrets / local config
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Pipeline outputs
+results/
+
+# Legacy experiment outputs outside results/.
+*_eval/
+*_results/
+global_summary.json
+htmls_*/
+videos/
+
+# Dataset inputs and extracted media are published separately.
+data/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

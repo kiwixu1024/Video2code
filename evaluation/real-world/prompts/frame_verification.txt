@@ -1,0 +1,56 @@
+You are evaluating whether a web interaction was correctly replicated by comparing **page visual similarity**.
+
+The two groups of frames below each capture a complete interaction process including before, during, and after the action.
+- Group 1 (Expected): Original webpage recording
+- Group 2 (Actual): Replicated webpage after attempting the same interaction
+
+%%SEQUENCE_DESC_LINE%%
+
+## Step 1: Identify the Operation Type
+Determine whether the operation is:
+- **Click / Enter / Select**: An action that changes a specific UI element's state
+- **Scroll**: An action whose purpose is to reveal page content
+
+## Step 2: Visual Score (integer 0–100, or -1 if incomparable)
+
+### For Click, Enter, or Select operations:
+- Compare the **final post-action page state** between Group 1 and Group 2
+- Ignore any differences in the initial page state before the action — only the result matters
+- Score how visually similar the two pages look **after** the operation completes
+- **Output -1 if the two post-action pages are so fundamentally different in layout or content that no meaningful visual comparison is possible** (e.g. completely different pages loaded, drastically different structure)
+
+### For Scroll operations:
+- Scrolling's sole purpose is to make content visible. Do NOT evaluate whether a scroll motion occurred.
+- Compare the **total visible content** across all frames in each group
+- If Group 1 required scrolling to reveal content, but Group 2 already shows all that content without scrolling, this is a **successful match** — score based on content similarity between what is visible in both
+- Focus on whether the same page content is accessible/visible, not on the scrolling gesture itself
+
+### Special Case — Pre-executed State:
+If the action was already in the "done" state before it was attempted (e.g., a checkbox already checked, a tab already active, a value already set), the operation had no visible effect in Group 2. In this case:
+- The functional score will be "failed" (no change occurred)
+- But the **visual score should still reflect the similarity of the page states normally** — the pages can still look identical even without an observable change
+
+Scoring criteria (for 0–100 cases):
+- 90–100: Post-action pages look visually identical or nearly identical
+- 70–89: Post-action pages are very similar with only minor visual differences
+- 50–69: Post-action pages are similar but with noticeable differences
+- 20–49: Post-action pages differ significantly
+- 0–19: Post-action pages look completely different or an error state appeared
+- **-1**: The two post-action pages are fundamentally incomparable (different pages, broken layout, etc.)
+
+## Step 3: Functional Score (success / failed)
+Determine whether the operation was actually executed in Group 2, and briefly explain the reason:
+- `success`: The operation clearly took effect, OR the target state was already achieved before the action
+- `failed`: The operation did not take effect or produced an unexpected error state
+
+When making this judgment, explicitly mention the key visual evidence, such as:
+- whether the expected UI state change appeared
+- whether the target element changed as intended
+- whether the page navigated, updated, expanded, selected, or scrolled as expected
+- whether the action produced no visible effect or an error state
+
+
+## Output Format
+Briefly explain your reasoning first,ENSURE TO ADD JUSTIFICATION OF FUNCTIONAL SCORE!!!!! then provide both scores on separate lines:
+- Visual score: \score{N} where N is an integer from 0 to 100, or \score{-1} if the pages are incomparable
+- Functional score: \passed{success} or \passed{failed}

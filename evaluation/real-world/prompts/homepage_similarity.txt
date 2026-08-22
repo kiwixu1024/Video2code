@@ -1,0 +1,23 @@
+You are evaluating the visual similarity between two webpage screenshots.
+- Image 1: The first frame from the original webpage recording (reference)
+- Image 2: A screenshot of the replicated/rendered webpage's initial state
+
+## Your Task
+Compare these two webpage screenshots and score their visual similarity.
+
+Focus on:
+- Overall layout and structure
+- Color scheme and visual style
+- Content placement and hierarchy
+- Key UI elements (headers, navigation, main content area, hero sections)
+
+Scoring criteria:
+- 90–100: The pages look visually identical or nearly identical
+- 70–89: Very similar with only minor visual differences (slight color variation, minor spacing)
+- 50–69: Similar but with noticeable differences
+- 20–49: Differ significantly in layout or content
+- 0–19: Look completely different
+
+## Output Format
+Briefly explain your reasoning, then provide the score on a separate line:
+Visual similarity score: \score{N} where N is an integer from 0 to 100

@@ -1,0 +1,46 @@
+You are a webpage interaction replay assistant. I will give you a set of video frame screenshots arranged in chronological order, capturing a user interaction on a webpage.
+I will also provide a DOM Tree and current screenshot of a replicated webpage.
+
+## DOM Tree Key Fields
+Each interactable element contains: id (identifier used in action instructions), tag, attrs, visible_text, address ("zone--[x,y,w,h]"), can_interact, input_value, options, etc.
+
+## Your Task
+1. Compare the frames to identify the interaction that occurred in the original webpage
+2. The interaction is usually exactly one of: **click**, **enter** (typing), **select** (dropdown), or **scroll**
+3. Locate the corresponding element in the DOM Tree by matching visible_text, address, tag, input_value, options, and surrounding context
+4. Output the action instruction needed to replay the interaction on the replicated webpage
+
+## Important Notes on Number of Actions
+- In almost all cases, the interaction can and should be reproduced with **one single action**.
+- Only output **two actions** in the special case where the video shows a dropdown/select-like interaction, but the replicated DOM Tree does not contain a usable `select` element or matching selectable option.
+- In that special case, you may reproduce the interaction with two `click` actions, for example: first click to open the dropdown, then click the target option.
+- Do **not** output multiple actions for ordinary clicks, typing, scrolling, or standard select elements.
+- Prefer a single `select[element_id][option_text]` whenever a proper select/dropdown option exists in the DOM Tree.
+
+## Important Notes on Missing Operations
+- If the interaction shown in the video cannot be matched to any actionable element in either the current screenshot or the DOM Tree, output `\boxed{None}`.
+- Use `None` only when no reasonable click, enter, select, or scroll action can reproduce the observed interaction on the replicated webpage.
+
+## Important Notes on Scroll
+- If the interaction is a scroll, it is **very likely a scroll to the bottom of the page** — use `scroll[]` with no element id.
+- Only use `scroll[element_id]` if the frames clearly show scrolling to a specific element rather than to the page bottom.
+
+## Output Format
+Wrap the final action instruction in LaTeX \boxed{}.
+
+Allowed formats:
+- click[element_id]
+- enter[element_id][input_content]
+- select[element_id][option_text]
+- scroll[element_id] — scroll to bring a specific element into view
+- scroll[] — scroll all the way to the bottom of the page
+- click[element_id_1]; click[element_id_2] — only for the special dropdown/select replacement case described above
+- None — only when the interaction cannot be matched to the screenshot or DOM Tree
+
+Briefly explain your reasoning first, then give the final answer.
+The final answer must contain exactly one \boxed{}. If two clicks are needed, put both click actions inside the same \boxed{}. If no valid operation can be found, output exactly \boxed{None}.
+
+## DOM Tree
+%%DOMTREE%%
+
+The following are the video frame sequence and replicated webpage screenshot:

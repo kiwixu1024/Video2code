@@ -1,0 +1,25 @@
+# Unified dependencies for all data construction, data processing, and
+# real-world/synthesis evaluation components. Python 3.10+ is recommended.
+
+aiofiles>=23.2
+faker>=24
+fastapi>=0.111
+gym>=0.26
+numpy>=1.26
+openai>=1.30
+# The full OpenCV package covers both the processing pipeline's headless usage
+# and evaluation utilities that may use GUI-enabled OpenCV builds.
+opencv-python>=4.9
+Pillow>=10
+playwright>=1.44
+psutil>=5.9
+pydantic>=2.7
+python-dotenv>=1.0
+requests>=2.32
+tqdm>=4.66
+uvicorn>=0.30
+wids>=0.1.11
+
+# System dependencies are installed separately:
+#   ffmpeg / ffprobe
+#   playwright install chromium
