@@ -3,7 +3,7 @@
 Official evaluation code for
 **[Video2Code: Generating Interactive Webpages from UI Videos via Action-Aware Revisit](https://arxiv.org/abs/2606.20711)**.
 
-**Paper:** [Repository PDF](assets/video2code.pdf) · [arXiv](https://arxiv.org/abs/2606.20711)
+**Paper:** [arXiv](https://arxiv.org/abs/2606.20711)
 
 Video2Code treats UI video-to-code generation as executable state-transition
 recovery. A model first reads the full interaction video coarsely, predicts
