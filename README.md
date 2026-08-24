@@ -5,20 +5,8 @@ Official data-construction and evaluation code for
 
 **Paper:** [Repository PDF](assets/video2code.pdf) · [arXiv](https://arxiv.org/abs/2606.20711)
 
-Video2Code treats UI video-to-code generation as executable state-transition
-recovery. A model first reads the full interaction video coarsely, predicts
-action-critical temporal regions, revisits those regions at higher temporal
-resolution with a clipping tool, and then generates executable HTML, CSS, and
-JavaScript. This repository contains the pipeline for constructing the
-action-aligned training data and the browser-based evaluation for real-world and
-synthetic benchmarks.
 
 ## Overview
-
-UI videos capture not only how a webpage looks, but also how it changes after a
-click, text input, selection, or scroll. Sparse video sampling can miss these
-short transitions. Video2Code therefore centers each training and evaluation
-example on a complete **state-action-state** transition.
 
 ```text
                   Action-aligned training data
@@ -49,12 +37,6 @@ example on a complete **state-action-state** transition.
              sequential website tasks               segment/operation tasks
 ```
 
-The paper formulates an action-critical segment as the interval containing the
-UI state before an operation, the operation itself, and the resulting UI state.
-The construction code records these temporal anchors and turns them into
-temporal-clipping tool-call supervision. The evaluation code checks both rendered
-appearance and whether replaying the demonstrated action produces the expected
-state transition.
 
 ## Repository layout
 
@@ -120,28 +102,22 @@ Two complementary metrics are reported:
 
 - **Visual similarity** measures whether the rendered state after interaction
   matches the target state in the video.
-- **Functional correctness** measures whether the generated page reproduces the
-  expected action-triggered state change.
+- **Functional correctness** measures whether the generated page reproduces the expected action-triggered state change.
 
-Scores are first averaged over interaction tasks within each webpage and then
-averaged across webpages, so pages containing more tasks do not dominate the
-benchmark result.
+
 
 ### WebVid2Code-Real
 
 The real-world subset contains manually recorded interactions from public
 websites. Tasks follow the original interaction order and share browser state.
-When a task cannot be completed from the current state, evaluation can reload the
-initial generated page and retry that task to reduce cascading failures.
+
 
 See [evaluation/real-world/README.md](evaluation/real-world/README.md).
 
 ### WebVid2Code-Syn
 
 The synthesis subset contains controlled webpages obtained from automated
-exploration trajectories. Operations execute in `segment/operation` order. Page
-state accumulates within a segment and resets between segments, matching the
-synthetic benchmark annotation structure.
+exploration trajectories.
 
 See [evaluation/synthesis/README.md](evaluation/synthesis/README.md).
 
