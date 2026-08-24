@@ -178,6 +178,49 @@ The root `requirements.txt` installs the union of dependencies needed by all
 components. Component-specific requirement files are also available for smaller
 environments.
 
+## Download evaluation data
+
+The WebVid2Code-Real and WebVid2Code-Syn evaluation datasets are hosted on
+[Hugging Face](https://huggingface.co/datasets/KiwiXu/Video2code). The complete
+download is approximately 3.8 GB and includes the source videos, extracted
+frames, and timeline annotations for both benchmarks.
+
+Install the Hugging Face CLI and download the dataset into a temporary local
+directory:
+
+```bash
+pip install -U huggingface_hub
+hf download KiwiXu/Video2code \
+  --repo-type dataset \
+  --local-dir .video2code_dataset
+```
+
+Copy each subset into the layout expected by the evaluation pipelines:
+
+```bash
+mkdir -p evaluation/real-world/data evaluation/synthesis/data
+
+cp -R .video2code_dataset/real-world/. evaluation/real-world/data/
+cp -R .video2code_dataset/synthesis/. evaluation/synthesis/data/
+```
+
+The resulting directory structure should be:
+
+```text
+evaluation/
+├── real-world/data/
+│   ├── videos/
+│   ├── frames/
+│   └── timeline.jsonl
+└── synthesis/data/
+    ├── videos/
+    ├── frames/
+    └── timeline.jsonl
+```
+
+After verifying the copied files, the temporary `.video2code_dataset/`
+directory can be removed.
+
 ## Quick start
 
 Construct a dataset from local HTML files or URLs:
