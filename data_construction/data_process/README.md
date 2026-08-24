@@ -53,7 +53,7 @@ Set `VIDEO2CODE_DATA_ROOT` to the shared dataset workspace. All stages resolve
 their input and output paths from that root. Run scripts from the repository root:
 
 ```bash
-python data/data_process/01_build_timeline_dataset.py
+python data_construction/data_process/01_build_timeline_dataset.py
 ```
 
 Large stages overwrite their declared JSONL output. Keep source data immutable,

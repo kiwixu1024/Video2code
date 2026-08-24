@@ -55,7 +55,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 playwright install chromium
-cp data/data_construct/.env.example data/data_construct/.env
+cp data_construction/data_construct/.env.example data_construction/data_construct/.env
 ```
 
 Export the values from `.env` in the current shell. The program deliberately does
@@ -66,10 +66,10 @@ not read secrets from version-controlled JSON files.
 Copy the example and edit its input/output paths:
 
 ```bash
-cp data/data_construct/config.html.example.json data/data_construct/config.local.json
+cp data_construction/data_construct/config.html.example.json data_construction/data_construct/config.local.json
 export OPENAI_API_KEY=your-key
-python data/data_construct/00_collect_interactions.py \
-  --config data/data_construct/config.local.json
+python data_construction/data_construct/00_collect_interactions.py \
+  --config data_construction/data_construct/config.local.json
 ```
 
 ## URL mode
@@ -78,10 +78,10 @@ The URL file accepts one URL per line. JSONL records containing a URL are also
 supported by the existing loader.
 
 ```bash
-cp data/data_construct/config.url.example.json data/data_construct/config.local.json
+cp data_construction/data_construct/config.url.example.json data_construction/data_construct/config.local.json
 export OPENAI_API_KEY=your-key
-python data/data_construct/00_collect_interactions.py \
-  --config data/data_construct/config.local.json
+python data_construction/data_construct/00_collect_interactions.py \
+  --config data_construction/data_construct/config.local.json
 ```
 
 Relative paths in a JSON configuration are resolved relative to that JSON file.
@@ -94,7 +94,7 @@ Set the construction output and processing root to the same directory:
 
 ```bash
 export VIDEO2CODE_DATA_ROOT=/absolute/path/to/output
-python data/data_process/01_build_timeline_dataset.py
+python data_construction/data_process/01_build_timeline_dataset.py
 ```
 
 Step `00_normalize_filtered_videos.py` is unnecessary for newly constructed data,

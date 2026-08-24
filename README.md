@@ -26,12 +26,12 @@ example on a complete **state-action-state** transition.
  URL or local HTML
         |
         v
- data/data_construct
+ data_construction/data_construct
  Automated browser exploration, interaction recording, action timelines
         |
         |  results/<id>.json + videos/<id>.mp4
         v
- data/data_process
+ data_construction/data_process
  Timeline alignment, splitting, clipping, annotation, filtering, packaging
         |
         v
@@ -60,8 +60,8 @@ state transition.
 
 | Path | Purpose | Documentation |
 |---|---|---|
-| `data/data_construct/` | Automatically explore public URLs or local HTML files and record filtered interaction videos with action-aligned timelines. | [Data construction](data/data_construct/README.md) |
-| `data/data_process/` | Convert recordings into Action-Aware Revisit training records, including temporal clips, model annotations, filtering, and packaged shards. | [Data processing](data/data_process/README.md) |
+| `data_construction/data_construct/` | Automatically explore public URLs or local HTML files and record filtered interaction videos with action-aligned timelines. | [Data construction](data_construction/data_construct/README.md) |
+| `data_construction/data_process/` | Convert recordings into Action-Aware Revisit training records, including temporal clips, model annotations, filtering, and packaged shards. | [Data processing](data_construction/data_process/README.md) |
 | `evaluation/real-world/` | Generate webpages and evaluate WebVid2Code-Real with sequential browser interaction replay and initial-page retry. | [Real-world evaluation](evaluation/real-world/README.md) |
 | `evaluation/synthesis/` | Evaluate WebVid2Code-Syn using its segment/operation hierarchy and segment-level state reset rules. | [Synthesis evaluation](evaluation/synthesis/README.md) |
 
@@ -72,7 +72,7 @@ formats are intentionally kept in the README of each component.
 
 ### 1. Collect UI interaction videos
 
-`data/data_construct` accepts either executable local HTML files or a list of
+`data_construction/data_construct` accepts either executable local HTML files or a list of
 webpage URLs. An exploration agent launches each page in a Playwright browser,
 discovers useful interactions, executes and validates them, and records the
 browser viewport. A lightweight color marker provides precise temporal anchors
@@ -88,11 +88,11 @@ dataset_root/
 
 Only the filtered video is retained, and its timestamps match
 `action_frames_timeline_filtered`. See the
-[construction guide](data/data_construct/README.md) for HTML and URL modes.
+[construction guide](data_construction/data_construct/README.md) for HTML and URL modes.
 
 ### 2. Build Action-Aware Revisit supervision
 
-`data/data_process` consumes the videos and timelines, then:
+`data_construction/data_process` consumes the videos and timelines, then:
 
 1. converts action anchors into a normalized timeline dataset;
 2. splits long recordings and reduces irrelevant temporal gaps;
@@ -104,7 +104,7 @@ Only the filtered video is retained, and its timestamps match
 
 The tool-call, reasoning, and code-generation annotation branches can run in
 parallel before they are merged. See the
-[processing guide](data/data_process/README.md) for the complete numbered
+[processing guide](data_construction/data_process/README.md) for the complete numbered
 pipeline.
 
 ## Evaluation
@@ -183,23 +183,23 @@ environments.
 Construct a dataset from local HTML files or URLs:
 
 ```bash
-cp data/data_construct/config.html.example.json \
-   data/data_construct/config.local.json
+cp data_construction/data_construct/config.html.example.json \
+   data_construction/data_construct/config.local.json
 export OPENAI_API_KEY=your-key
 
-python data/data_construct/00_collect_interactions.py \
-  --config data/data_construct/config.local.json
+python data_construction/data_construct/00_collect_interactions.py \
+  --config data_construction/data_construct/config.local.json
 ```
 
 Process the constructed recordings:
 
 ```bash
 export VIDEO2CODE_DATA_ROOT=/absolute/path/to/construction/output
-python data/data_process/01_build_timeline_dataset.py
+python data_construction/data_process/01_build_timeline_dataset.py
 ```
 
 Then continue through the numbered stages documented in
-[data/data_process/README.md](data/data_process/README.md).
+[data_construction/data_process/README.md](data_construction/data_process/README.md).
 
 Run an evaluation from the corresponding directory:
 
