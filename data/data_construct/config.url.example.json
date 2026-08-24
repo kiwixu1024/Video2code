@@ -1,0 +1,12 @@
+{
+    "input_type": "url",
+    "input_dir": "",
+    "url_file": "./big_url_100.jsonl",
+    "image_dir": "./output/",
+    "bug_dir": "./output/failed_html/",
+    "api_base": "https://api.openai.com/v1",
+    "model_name": "gpt-4.1",
+    "webenv_py": "./webenv-init/webenv.py",
+    "num_port": 4,
+    "port_base": 8000
+}
